@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: bbb30e530839e7e4daf258b32f3e01c2
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - grassAudio: {fileID: 8300000, guid: 6760f8defd2fb82478db709a43101229, type: 3}
+  - roadAudio: {fileID: 8300000, guid: 23db2e75f74b0d748a7c807c030421d3, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

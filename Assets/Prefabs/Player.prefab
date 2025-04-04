@@ -225,6 +225,7 @@ MonoBehaviour:
   MoveSpeed: 1.5
   TurnSpeed: 100
   bike: {fileID: 34002221728508653}
+  isMoving: 0
 --- !u!95 &4502725951429615996
 Animator:
   serializedVersion: 5

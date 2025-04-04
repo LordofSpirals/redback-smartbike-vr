@@ -13,6 +13,7 @@ public class PlayerMovementController : MonoBehaviour {
 
     private Vector3 stopPosition; // Variable to lock the player's position
     private bool isStopped = false; // Flag to check if the player is stopped
+    public bool isMoving = false;
 
     private void Start() {
         if (bike != null) {
@@ -37,7 +38,7 @@ public class PlayerMovementController : MonoBehaviour {
             float vert = Input.GetAxis("Vertical");
             float horz = Input.GetAxis("Horizontal");
 
-            bool isMoving = vert != 0 || horz != 0;
+            isMoving = vert != 0 || horz != 0;
 
             // Setting Animator parameters based on movement for bike
             bikeAnim.SetBool("Moving", isMoving);
@@ -85,4 +86,7 @@ public class PlayerMovementController : MonoBehaviour {
             isStopped = false;
         }
     }
+
+    //Public function to get moving status of bike
+    public bool IsMoving() {  return isMoving; }
 }

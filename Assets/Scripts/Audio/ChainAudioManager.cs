@@ -61,7 +61,7 @@ public class ChainAudioManager : MonoBehaviour
 
         chainSource.volume = audioMod;
 
-        audioMod = audioMod * 2;
+        audioMod = audioMod * 2.5f;
         chainSource.pitch = audioMod;
     }
 }

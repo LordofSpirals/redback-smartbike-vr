@@ -1,6 +1,8 @@
+using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -14,6 +16,7 @@ public class ChainAudioManager : MonoBehaviour
     public AudioSource chainSource; // AudioSource playing chain audio
     public AudioClip chainAudio; // Audio clip for bike chain
     private float audioMod; // float to adjust audio speed, pitch
+    private float lastAverage; // last average speed measurement
 
     void Start()
     {
@@ -28,6 +31,7 @@ public class ChainAudioManager : MonoBehaviour
         UpdateArray();
         GetAverageSpeed();
         UpdateAudioSource();
+        SteadySpeed();
         //Debug.Log("Bike speed: " + speed);
     }
 
@@ -45,8 +49,24 @@ public class ChainAudioManager : MonoBehaviour
 
     float GetAverageSpeed ()
     {
-        Debug.Log("Average speed: " + speeds.Average());
+        //Debug.Log("Average speed: " + speeds.Average());
         return speeds.Average();
+    }
+
+    bool SteadySpeed ()
+    {
+        float difference = GetAverageSpeed() - lastAverage;
+        Debug.Log("Speed difference: " +  difference);
+        lastAverage = GetAverageSpeed();
+        if (Mathf.Abs(difference) < 0.0014f)
+        {
+            Debug.Log("Steady speed");
+            return true;
+        } else
+        {
+            Debug.Log("UNSTEADY");
+            return false;
+        }
     }
 
     void UpdateAudioSource ()
@@ -54,12 +74,18 @@ public class ChainAudioManager : MonoBehaviour
         audioMod = GetAverageSpeed() / 0.064f; // normalise to approx max speed
         if (audioMod > 1)
             audioMod = 1; // cap at 1
-        Debug.Log("audioMod: " + audioMod);
+        //Debug.Log("audioMod: " + audioMod);
 
         if (Mathf.Approximately(audioMod, 0))
             chainSource.volume = 0; // mute chain if bike is stopped
 
-        chainSource.volume = audioMod;
+        if (SteadySpeed())
+        {
+            chainSource.volume = 0; // mute chain if speed is steady
+        } else
+        {
+            chainSource.volume = audioMod;
+        }
 
         audioMod = audioMod * 2.5f;
         chainSource.pitch = audioMod;
